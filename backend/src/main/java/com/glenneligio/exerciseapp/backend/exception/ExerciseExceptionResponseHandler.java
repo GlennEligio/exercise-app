@@ -3,11 +3,13 @@ package com.glenneligio.exerciseapp.backend.exception;
 import com.glenneligio.exerciseapp.backend.dto.ExceptionResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 
+@RestControllerAdvice
 public class ExerciseExceptionResponseHandler extends ResponseEntityExceptionHandler {
 
     // Handle ApiExceptions

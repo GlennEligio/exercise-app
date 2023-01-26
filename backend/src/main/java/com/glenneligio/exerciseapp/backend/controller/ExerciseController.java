@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/exercises")
@@ -40,5 +39,11 @@ public class ExerciseController {
     @PostMapping
     public ResponseEntity<Exercise> createExercise(@RequestBody Exercise exercise) {
         return ResponseEntity.ok(service.createExercise(exercise));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteExercise(@PathVariable String id) {
+        service.deleteExercise(id);
+        return ResponseEntity.ok().build();
     }
 }

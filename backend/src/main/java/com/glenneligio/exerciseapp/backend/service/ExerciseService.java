@@ -53,4 +53,10 @@ public class ExerciseService {
     public List<Exercise> findExerciseByName(String name) {
         return exerciseRepository.findByNameStartingWith(name);
     }
+
+    public void deleteExercise(String id) {
+        exerciseRepository.findById(id)
+                .ifPresentOrElse(exercise -> exerciseRepository.deleteById(exercise.getId()),
+                        () -> {throw new ApiException("Exercise not found", HttpStatus.NOT_FOUND);});
+    }
 }
