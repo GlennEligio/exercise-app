@@ -1,14 +1,14 @@
 package com.glenneligio.exerciseapp.backend.controller;
 
-import com.glenneligio.exerciseapp.backend.dto.AccountDto;
-import com.glenneligio.exerciseapp.backend.dto.RegisterRequestDto;
-import com.glenneligio.exerciseapp.backend.dto.LoginRequestDto;
-import com.glenneligio.exerciseapp.backend.dto.LoginResponseDto;
+import com.glenneligio.exerciseapp.backend.dto.*;
+import com.glenneligio.exerciseapp.backend.exception.ApiException;
 import com.glenneligio.exerciseapp.backend.model.Account;
 import com.glenneligio.exerciseapp.backend.model.Exercise;
 import com.glenneligio.exerciseapp.backend.model.ExercisePlan;
 import com.glenneligio.exerciseapp.backend.service.AccountService;
+import com.glenneligio.exerciseapp.backend.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +20,21 @@ public class AccountController {
 
     @Autowired
     private AccountService service;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto login) {
-        // Add login after implementing Spring Security
-
-        return null;
+        Account account = service.verifyAccountLogin(login.username(), login.password());
+        MyUserDetails userDetails = new MyUserDetails(account);
+        LoginResponseDto responseDto = new LoginResponseDto(
+                login.username(),
+                login.password(),
+                account.getName(),
+                jwtUtil.generateToken(userDetails),
+                account.getProfileUrl()
+        );
+        return ResponseEntity.ok(responseDto);
     }
 
     // For Testing in Postman

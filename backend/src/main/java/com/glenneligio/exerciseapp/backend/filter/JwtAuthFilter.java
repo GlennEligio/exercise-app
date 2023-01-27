@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,9 +24,9 @@ import java.util.regex.Pattern;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final AccountService service;
+    private final UserDetailsService service;
 
-    public JwtAuthFilter(JwtUtil jwtUtil, AccountService service) {
+    public JwtAuthFilter(JwtUtil jwtUtil, UserDetailsService service) {
         this.jwtUtil = jwtUtil;
         this.service = service;
     }
