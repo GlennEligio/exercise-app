@@ -1,6 +1,9 @@
 package com.glenneligio.exerciseapp.backend.model;
 
 import com.glenneligio.exerciseapp.backend.enums.Role;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,11 +27,16 @@ import java.util.List;
 public class Account {
     @Id
     private String id;
+
+    @NotBlank
     private String name;
     @Indexed(unique = true)
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
     private String description;
+    @NotBlank
     private String email;
     private String profileUrl;
 

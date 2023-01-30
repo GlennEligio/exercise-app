@@ -1,5 +1,9 @@
 package com.glenneligio.exerciseapp.backend.model;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +25,13 @@ public class ExercisePlanHistory {
 
     @DBRef
     private Account creator;
+    @NotEmpty
     private List<Exercise> exercises;
+
+    @FutureOrPresent
     private LocalDateTime dateStarted;
+    @FutureOrPresent
     private LocalDateTime dateFinished;
+    @Positive
     private int exercisesFinished;
 }

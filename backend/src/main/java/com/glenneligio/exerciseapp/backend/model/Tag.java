@@ -18,5 +18,6 @@ public class Tag {
     private String id;
 
     @Indexed(unique = true)
+    @NotBlank
     private String name;
 }

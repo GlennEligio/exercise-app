@@ -4,6 +4,7 @@ import com.glenneligio.exerciseapp.backend.dto.CreateExerciseDto;
 import com.glenneligio.exerciseapp.backend.model.Exercise;
 import com.glenneligio.exerciseapp.backend.model.ExercisePlan;
 import com.glenneligio.exerciseapp.backend.repository.ExercisePlanRepository;
+import jakarta.validation.Valid;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class ExercisePlanController {
     }
 
     @PostMapping
-    public ResponseEntity<ExercisePlan> createPlan(@RequestBody ExercisePlan plan) {
+    public ResponseEntity<ExercisePlan> createPlan(@Valid @RequestBody ExercisePlan plan) {
         return ResponseEntity.ok(repository.save(plan));
     }
 }

@@ -7,6 +7,7 @@ import com.glenneligio.exerciseapp.backend.model.Exercise;
 import com.glenneligio.exerciseapp.backend.model.ExercisePlan;
 import com.glenneligio.exerciseapp.backend.service.AccountService;
 import com.glenneligio.exerciseapp.backend.util.JwtUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class AccountController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto login) {
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto login) {
         Account account = service.verifyAccountLogin(login.username(), login.password());
         MyUserDetails userDetails = new MyUserDetails(account);
         LoginResponseDto responseDto = new LoginResponseDto(
@@ -44,7 +45,7 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Account> register(@RequestBody RegisterRequestDto dto) {
+    public ResponseEntity<Account> register(@Valid @RequestBody RegisterRequestDto dto) {
         Account account = service.createAccount(dto.toAccount());
         return ResponseEntity.status(200).body(account);
     }
@@ -63,19 +64,19 @@ public class AccountController {
 
     @PostMapping("/{username}/exercises")
     public ResponseEntity<List<Exercise>> addSavedExercises(@PathVariable String username,
-                                                            @RequestBody Exercise exercise) {
+                                                            @Valid @RequestBody Exercise exercise) {
         return ResponseEntity.ok(service.updateAccountExercise(username, exercise));
     }
 
     @PostMapping("/{username}/plans")
     public ResponseEntity<List<ExercisePlan>> addSavedExercisePlans(@PathVariable String username,
-                                                                    @RequestBody ExercisePlan plan) {
+                                                                    @Valid @RequestBody ExercisePlan plan) {
         return ResponseEntity.ok(service.updateAccountExercisePlans(username, plan));
     }
 
     @PutMapping("/{username}")
     public ResponseEntity<AccountDto> updateAccount(@PathVariable String username,
-                                                    @RequestBody AccountDto dto) {
+                                                    @Valid @RequestBody AccountDto dto) {
         Account updatedAccount = service.updateAccount(username, AccountDto.toAccount(dto));
         AccountDto responseDto = AccountDto.toDto(updatedAccount);
         return ResponseEntity.ok(responseDto);

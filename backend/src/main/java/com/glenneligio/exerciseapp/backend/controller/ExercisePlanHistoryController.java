@@ -3,6 +3,7 @@ package com.glenneligio.exerciseapp.backend.controller;
 import com.glenneligio.exerciseapp.backend.model.Exercise;
 import com.glenneligio.exerciseapp.backend.model.ExercisePlanHistory;
 import com.glenneligio.exerciseapp.backend.service.ExercisePlanHistoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ExercisePlanHistoryController {
     private ExercisePlanHistoryService service;
 
     @PostMapping("/plans")
-    public ResponseEntity<ExercisePlanHistory> createPlanHistory(@RequestBody ExercisePlanHistory planHistory) {
+    public ResponseEntity<ExercisePlanHistory> createPlanHistory(@Valid @RequestBody ExercisePlanHistory planHistory) {
         return ResponseEntity.status(201).body(service.createExercisePlanHistory(planHistory));
     }
 

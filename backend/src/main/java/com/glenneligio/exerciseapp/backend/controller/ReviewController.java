@@ -3,6 +3,7 @@ package com.glenneligio.exerciseapp.backend.controller;
 import com.glenneligio.exerciseapp.backend.dto.ReviewDto;
 import com.glenneligio.exerciseapp.backend.model.Review;
 import com.glenneligio.exerciseapp.backend.repository.ReviewRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Review> createReview(@RequestBody ReviewDto dto) {
+    public ResponseEntity<Review> createReview(@Valid @RequestBody ReviewDto dto) {
         Review review = dto.toReview();
         return ResponseEntity.status(201).body(repository.save(review));
     }

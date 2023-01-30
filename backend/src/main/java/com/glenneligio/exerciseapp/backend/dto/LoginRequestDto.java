@@ -1,7 +1,10 @@
 package com.glenneligio.exerciseapp.backend.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public record LoginRequestDto(
-        String username,
-        String password
+        @NotBlank String username,
+        @NotBlank String password
 ) {
 }
