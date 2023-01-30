@@ -2,12 +2,12 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { WrappedApp, App } from './App';
+import App from './App';
 
 describe('App', () => {
   it('Render Hello World', () => {
     // ARRANGE
-    render(<WrappedApp />);
+    render(<App />);
     // ACT
     // ASSERT
     expect(
