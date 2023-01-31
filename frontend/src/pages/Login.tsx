@@ -1,30 +1,46 @@
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import Image from 'react-bootstrap/esm/Image';
+import { useDispatch } from 'react-redux';
+import AccountService, { LoginResponseDto } from '../api/accountService';
+import useHttp, { RequestConfig } from '../hooks/useHttp';
+import { authActions } from '../store/authSlice';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
+  const {
+    sendRequest: login,
+    data,
+    error,
+    status,
+  } = useHttp<LoginResponseDto>(AccountService.login, false);
+
+  // Checking useHttp states
+  useEffect(() => {
+    if (data && error === null && status === 'completed') {
+      dispatch(authActions.saveAuth(data));
+    }
+  }, [data, error, status, dispatch]);
 
   const loginFormSubmitHandler: FormEventHandler = async (e) => {
     e.preventDefault();
+
     const loginCredentials = {
       username,
       password,
     };
 
-    const response = await fetch(
-      'http://localhost:8080/api/v1/accounts/login',
-      {
-        method: 'POST',
-        body: JSON.stringify(loginCredentials),
-        headers: {
-          'Content-type': 'application/json',
-        },
-      }
-    );
-    const data = await response.json();
-    console.log(data);
+    const requestConfig: RequestConfig = {
+      body: loginCredentials,
+      headers: {
+        'Content-type': 'application/json',
+      },
+    };
+
+    login(requestConfig);
   };
 
   return (

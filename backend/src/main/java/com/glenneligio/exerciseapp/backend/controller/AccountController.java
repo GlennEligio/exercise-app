@@ -29,6 +29,7 @@ public class AccountController {
         Account account = service.verifyAccountLogin(login.username(), login.password());
         MyUserDetails userDetails = new MyUserDetails(account);
         LoginResponseDto responseDto = new LoginResponseDto(
+                account.getId(),
                 login.username(),
                 login.password(),
                 account.getName(),

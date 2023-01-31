@@ -1,10 +1,11 @@
 package com.glenneligio.exerciseapp.backend.dto;
 
 public record LoginResponseDto(
-         String username,
-         String accountType,
-         String fullName,
-         String accessToken,
-         String profile
+        String id,
+        String username,
+        String accountType,
+        String name,
+        String accessToken,
+        String profile
 ) {
 }
