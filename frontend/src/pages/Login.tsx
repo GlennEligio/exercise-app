@@ -22,6 +22,8 @@ function Login() {
   useEffect(() => {
     if (data && error === null && status === 'completed') {
       dispatch(authActions.saveAuth(data));
+      console.log('Data received');
+      console.log(data);
     }
   }, [data, error, status, dispatch]);
 
