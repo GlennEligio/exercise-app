@@ -9,7 +9,6 @@ import com.glenneligio.exerciseapp.backend.model.ExercisePlan;
 import com.glenneligio.exerciseapp.backend.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,6 +38,7 @@ public class AccountService implements UserDetailsService {
                 .orElseThrow(() -> new ApiException("Account with username specified not found", HttpStatus.NOT_FOUND));
     }
 
+    // TODO: Add method for adding new exercise
     public List<Exercise> updateAccountExercise(String username, Exercise exercise) {
         Account account = repository.findByUsername(username).orElseThrow(() -> new ApiException("Account not found", HttpStatus.NOT_FOUND));
         account.getSavedExercises().add(exercise);
@@ -46,6 +46,7 @@ public class AccountService implements UserDetailsService {
         return account.getSavedExercises();
     }
 
+    // TODO: Add method for adding new exercise plan
     public List<ExercisePlan> updateAccountExercisePlans(String username, ExercisePlan plan) {
         Account account = repository.findByUsername(username).orElseThrow(() -> new ApiException("Account not found", HttpStatus.NOT_FOUND));
         account.getSavedExercisePlans().add(plan);
