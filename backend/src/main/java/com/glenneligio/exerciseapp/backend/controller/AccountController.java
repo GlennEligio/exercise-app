@@ -46,9 +46,18 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Account> register(@Valid @RequestBody RegisterRequestDto dto) {
+    public ResponseEntity<LoginResponseDto> register(@Valid @RequestBody RegisterRequestDto dto) {
         Account account = service.createAccount(dto.toAccount());
-        return ResponseEntity.status(200).body(account);
+        MyUserDetails userDetails = new MyUserDetails(account);
+        LoginResponseDto responseDto = new LoginResponseDto(
+                account.getId(),
+                account.getUsername(),
+                account.getUsername(),
+                account.getName(),
+                jwtUtil.generateToken(userDetails),
+                account.getProfileUrl()
+        );
+        return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/{username}/exercises")

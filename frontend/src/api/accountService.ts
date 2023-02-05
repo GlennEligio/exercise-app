@@ -55,6 +55,25 @@ const login = async (requestConfig: RequestConfig) => {
   return responseObj;
 };
 
+const register = async (requestConfig: RequestConfig) => {
+  const responseObj: LoginResponseDto = await fetch(
+    `${BACKEND_URI}/api/v1/accounts/register`,
+    {
+      method: requestConfig.method || 'POST',
+      body:
+        requestConfig.body != null ? JSON.stringify(requestConfig.body) : null,
+      headers: requestConfig.headers != null ? requestConfig.headers : {},
+    }
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new ApiError('Registration failed');
+  });
+  return responseObj;
+};
+
 export default {
   login,
+  register,
 };

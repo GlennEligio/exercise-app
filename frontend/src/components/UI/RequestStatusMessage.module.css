@@ -1,0 +1,20 @@
+.message {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.pending {
+  color: black;
+}
+
+.message span {
+  margin-left: 0.5rem;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}

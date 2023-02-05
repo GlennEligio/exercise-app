@@ -8,17 +8,19 @@ import RequestStatusMessage from '../components/UI/RequestStatusMessage';
 import useHttp, { RequestConfig } from '../hooks/useHttp';
 import { authActions } from '../store/authSlice';
 
-function Login() {
+function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const dispatch = useDispatch();
 
   const {
-    sendRequest: login,
+    sendRequest: register,
     data,
     error,
     status,
-  } = useHttp<LoginResponseDto>(AccountService.login, false);
+  } = useHttp<LoginResponseDto>(AccountService.register, false);
 
   // Checking useHttp states
   useEffect(() => {
@@ -29,22 +31,24 @@ function Login() {
     }
   }, [data, error, status, dispatch]);
 
-  const loginFormSubmitHandler: FormEventHandler = async (e) => {
+  const registerFormSubmitHandler: FormEventHandler = async (e) => {
     e.preventDefault();
 
-    const loginCredentials = {
+    const registerFormData = {
       username,
       password,
+      name,
+      email,
     };
 
     const requestConfig: RequestConfig = {
-      body: loginCredentials,
+      body: registerFormData,
       headers: {
         'Content-type': 'application/json',
       },
     };
 
-    login(requestConfig);
+    register(requestConfig);
   };
 
   return (
@@ -55,17 +59,17 @@ function Login() {
           <div className="h-100 d-flex flex-column">
             <div className="align-self-stretch flex-fill d-flex flex-column justify-content-center">
               <Image fluid roundedCircle src="e-xercise-logo.png" />
-              <h2 className="text-center mb-3">Login</h2>
+              <h2 className="text-center mb-3">Register</h2>
               <RequestStatusMessage
                 data={data}
                 error={error}
-                loadingMessage="Logging in..."
+                loadingMessage="Registering..."
                 status={status}
-                successMessage="Logged in Successfully!"
-                key="LoginForm"
+                successMessage="Registered Successfully!"
+                key="RegisterForm"
               />
-              <Form onSubmit={loginFormSubmitHandler}>
-                <Form.Group className="mb-3" controlId="loginFormUsername">
+              <Form onSubmit={registerFormSubmitHandler}>
+                <Form.Group className="mb-3" controlId="registerFormUsername">
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="text"
@@ -74,25 +78,43 @@ function Login() {
                     onChange={(e) => setUsername(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="loginFormPassword">
+                <Form.Group className="mb-3" controlId="registerFormPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
-                    placeholder="Password"
+                    placeholder="Enter password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="registerFormName">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="registerFormEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="sample@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Form.Group>
                 <div className="d-flex justify-content-end">
                   <Button variant="primary" type="submit">
-                    Login
+                    Register
                   </Button>
                 </div>
               </Form>
             </div>
             <div className="py-4">
-              {"Don't have an account? Sign up "}
-              <Link to="/register">here</Link>
+              {'Already have an account? Sign in '}
+              <Link to="/login">here</Link>
             </div>
           </div>
         </Col>
@@ -102,4 +124,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
